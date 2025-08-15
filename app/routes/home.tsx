@@ -529,7 +529,7 @@ function PlatformStack() {
         <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl dark:text-gray-100">
           The Platform Stack
         </h2>
-        <p className="mt-4 mx-16 px-6 text-pretty text-lg leading-7 text-gray-600 dark:text-gray-300">
+        <p className="mt-4 mx-0 px-0 sm:mx-16 sm:px-6 text-pretty text-lg leading-7 text-gray-600 dark:text-gray-300">
           A modular system that meets you where you are—scaling from one agent
           to a company-wide AI workforce.
         </p>
@@ -622,7 +622,10 @@ function PlatformStack() {
 }
 function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden h-dvh">
+    <section
+      id="top"
+      className="relative overflow-hidden h-dvh flex flex-col items-center justify-center"
+    >
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 sm:pt-28">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mt-4 text-balance text-5xl font-semibold leading-tight tracking-tight sm:text-6xl dark:text-gray-100">
@@ -630,7 +633,7 @@ function HeroSection() {
               Collaboration workspace for AI & Humans
             </span>
           </h1>
-          <p className="mt-6 text-pretty text-2xl leading-10 text-gray-600 dark:text-gray-300">
+          <p className="mt-6 text-pretty text-lg sm:text-2xl leading-8 sm:leading-10 text-gray-600 dark:text-gray-300">
             Shoja is the collaboration workspace for AI agents and humans.
             Agents operate as autonomous teammates (within predefined
             parameters) with shared context, structured handoffs, and enterprise
@@ -653,7 +656,7 @@ function CTASection() {
     >
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div
-          className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full"
+          className="absolute left-1/2 top-0 h-[360px] w-[720px] sm:h-[500px] sm:w-[900px] -translate-x-1/2 rounded-full"
           style={{
             background: "var(--brand-secondary)",
             animation: "gradientShift 10s ease-in-out infinite",
@@ -666,7 +669,7 @@ function CTASection() {
             <h3 className="text-2xl font-semibold tracking-tight dark:text-gray-100">
               Be a founding design partner
             </h3>
-            <p className="mt-3 text-pretty text-gray-600 dark:text-gray-300 px-12">
+            <p className="mt-3 text-pretty text-gray-600 dark:text-gray-300 px-0 sm:px-12">
               We’re working with a small group of teams to shape Shoja. Join the
               waitlist and we’ll reach out as we expand access.
             </p>

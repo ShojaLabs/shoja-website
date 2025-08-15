@@ -199,7 +199,15 @@ body {
   background-clip: text;
   color: transparent;
   font-weight: 600;
-  font-size: 5.5rem;
+}
+
+/* Mobile refinements */
+@media (max-width: 640px) {
+  /* Hide decorative side rails on small screens */
+  .side-lines::before,
+  .side-lines::after {
+    display: none;
+  }
 }
 
 /* Heading font treatment */
