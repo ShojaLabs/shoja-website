@@ -41,7 +41,7 @@ function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-gray-200/60 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-gray-800/60 dark:bg-gray-950/60">
       <div className="mx-auto flex items-center gap-6 px-6 py-4 md:max-w-7xl">
         <a href="#top" className="group inline-flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-blue-600 via-indigo-600 to-fuchsia-500 shadow-sm ring-1 ring-black/5" />
+          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-[var(--brand-primary)] via-indigo-500 to-[var(--brand-secondary)] shadow-sm ring-1 ring-black/5" />
           <span className="text-lg font-semibold tracking-tight">Shoja</span>
         </a>
         <nav className="hidden flex-1 items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-300 md:flex">
@@ -53,7 +53,7 @@ function SiteHeader() {
         <div className="flex flex-1 items-center justify-end gap-3">
           <a
             href="#early-access"
-            className="inline-flex items-center rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+            className="inline-flex items-center rounded-full bg-[var(--brand-primary)] px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_oklab,var(--brand-primary)_45%,white)]"
           >
             Join the waitlist
           </a>
@@ -100,7 +100,9 @@ function TrustedStrip() {
   return (
     <section className="border-y border-gray-200/70 bg-white/60 py-6 dark:border-gray-800/70 dark:bg-gray-950/60">
       <div className="mx-auto flex max-w-7xl items-center justify-center gap-8 px-6 text-xs text-gray-500 dark:text-gray-400 sm:justify-between">
-        <p className="text-center sm:text-left">Infrastructure for the next generation of work</p>
+        <p className="text-center sm:text-left">
+          <span className="font-medium" style={{ color: "var(--brand-primary)" }}>Shoja</span> infrastructure for the next generation of work
+        </p>
         <div className="hidden items-center gap-4 sm:flex">
           <span className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-700" />
           <span>Enterprise-ready</span>
@@ -219,7 +221,7 @@ function EnablesSection() {
           {items.map((item) => (
             <div
               key={item.title}
-              className="rounded-2xl border border-gray-200 p-6 shadow-sm dark:border-gray-800"
+              className="glass dark:glass-dark rounded-2xl border border-gray-200/60 p-6 shadow-sm dark:border-gray-800/60"
             >
               <p className="text-sm font-medium text-gray-900 dark:text-white">
                 {item.title}
@@ -322,28 +324,36 @@ function PlatformStack() {
 }
 function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden">
+    <section id="top" className="relative overflow-hidden bg-grid">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-[-10%] h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-blue-600/20 via-indigo-600/10 to-fuchsia-400/20 blur-3xl" />
+        <div
+          className="absolute left-1/2 top-[-10%] h-[700px] w-[1100px] -translate-x-1/2 rounded-[999px]"
+          style={{
+            background:
+              "radial-gradient(40% 40% at 40% 40%, color-mix(in oklab, var(--brand-primary) 45%, transparent) 0%, transparent 60%), radial-gradient(35% 35% at 65% 50%, color-mix(in oklab, var(--brand-secondary) 35%, transparent) 0%, transparent 60%)",
+            animation: "gradientShift 9s ease-in-out infinite",
+          }}
+        />
       </div>
-      <div className="mx-auto max-w-7xl px-6 pb-20 pt-16 sm:pt-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+      <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 sm:pt-28">
+        <div className="mx-auto max-w-4xl text-center">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-gray-200/70 px-3 py-1 text-xs font-medium text-gray-600 dark:border-gray-800 dark:text-gray-300">
+            <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: "var(--brand-secondary)" }} />
             Private preview
           </span>
-          <h1 className="mt-4 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            The collaboration workspace for human + AI teams
+          <h1 className="mt-4 text-balance text-5xl font-semibold leading-tight tracking-tight sm:text-6xl">
+            <span className="bg-gradient-to-r from-[var(--brand-primary)] via-indigo-400 to-[var(--brand-secondary)] bg-clip-text text-transparent">
+              AI colleagues, not AI features
+            </span>
           </h1>
           <p className="mt-6 text-pretty text-lg leading-7 text-gray-600 dark:text-gray-300">
-            AI agents that operate as autonomous teammates—not just features. Shoja provides the
-            infrastructure for agents to work with humans, share context, hand off work, and be governed
-            with enterprise-grade controls.
+            Shoja is the collaboration workspace for human + AI teams. Agents operate as autonomous
+            teammates with shared context, structured handoffs, and enterprise governance.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="#early-access"
-              className="inline-flex items-center justify-center rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_oklab,var(--brand-primary)_45%,white)]"
             >
               Join the waitlist
             </a>
@@ -364,10 +374,17 @@ function CTASection() {
   return (
     <section id="early-access" className="relative overflow-hidden py-20">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-gradient-to-br from-indigo-600/20 via-blue-500/10 to-fuchsia-500/20 blur-3xl" />
+        <div
+          className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full"
+          style={{
+            background:
+              "radial-gradient(40% 40% at 40% 40%, color-mix(in oklab, var(--brand-primary) 40%, transparent) 0%, transparent 60%), radial-gradient(35% 35% at 65% 50%, color-mix(in oklab, var(--brand-secondary) 30%, transparent) 0%, transparent 60%)",
+            animation: "gradientShift 10s ease-in-out infinite",
+          }}
+        />
       </div>
       <div className="mx-auto max-w-4xl px-6">
-        <div className="rounded-3xl border border-gray-200 bg-white/60 p-8 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-950/60">
+        <div className="glass dark:glass-dark rounded-3xl border border-gray-200/60 p-8 shadow-sm backdrop-blur dark:border-gray-800/60">
           <div className="mx-auto max-w-2xl text-center">
             <h3 className="text-2xl font-semibold tracking-tight">Be a founding design partner</h3>
             <p className="mt-3 text-pretty text-gray-600 dark:text-gray-300">
@@ -377,7 +394,7 @@ function CTASection() {
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href="mailto:hello@shoja.ai?subject=Shoja%20Waitlist&body=I%20want%20to%20join%20the%20waitlist%20for%20Shoja.%20Here%27s%20a%20bit%20about%20our%20company%20and%20use%20case%3A%20"
-                className="inline-flex items-center justify-center rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--brand-primary)] px-6 py-3 text-sm font-medium text-white shadow-sm transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color-mix(in_oklab,var(--brand-primary)_45%,white)]"
               >
                 Email us to join the waitlist
               </a>
@@ -400,7 +417,7 @@ function SiteFooter() {
     <footer className="border-t border-gray-200 py-10 dark:border-gray-800">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 sm:flex-row">
         <div className="inline-flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-blue-600 via-indigo-600 to-fuchsia-500 shadow-sm ring-1 ring-black/5" />
+          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-[var(--brand-primary)] via-indigo-500 to-[var(--brand-secondary)] shadow-sm ring-1 ring-black/5" />
           <span className="text-sm font-semibold">Shoja</span>
           <span className="text-sm text-gray-500 dark:text-gray-400">© {new Date().getFullYear()}</span>
         </div>

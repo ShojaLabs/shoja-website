@@ -13,3 +13,63 @@ body {
     color-scheme: dark;
   }
 }
+
+/* Brand-driven visuals */
+:root {
+  --brand-primary: #5d30ff;
+  --brand-secondary: #30ff91;
+}
+
+/* Subtle animated gradient blob used in hero/cta backgrounds */
+@keyframes gradientShift {
+  0% {
+    transform: translate(-50%, -10%) scale(1);
+    filter: blur(60px);
+  }
+  50% {
+    transform: translate(-47%, -13%) scale(1.05);
+    filter: blur(70px);
+  }
+  100% {
+    transform: translate(-50%, -10%) scale(1);
+    filter: blur(60px);
+  }
+}
+
+/* Grid background overlay with radial fade mask */
+.bg-grid {
+  position: relative;
+}
+.bg-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--brand-primary) 18%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--brand-primary) 18%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse at 50% 20%, black 30%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Accent ring for brand elements */
+.brand-ring {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--brand-primary) 45%, transparent);
+}
+
+/* Glass card */
+.glass {
+  background: color-mix(in oklab, white 70%, transparent);
+  -webkit-backdrop-filter: saturate(1.2) blur(6px);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+.glass-dark {
+  background: color-mix(in oklab, #0b0b0f 70%, transparent);
+}
