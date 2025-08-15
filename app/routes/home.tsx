@@ -12,6 +12,7 @@ import {
   IconQuestionMark,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import { Form, useActionData, useNavigation } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   const title = "Shoja — AI agents that work as colleagues";
@@ -30,6 +31,92 @@ export function meta({}: Route.MetaArgs) {
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
   ];
+}
+
+export async function action({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const intent = formData.get("intent");
+  if (intent !== "join_waitlist") {
+    return Response.json(
+      { ok: false, error: "Invalid intent" },
+      { status: 400 }
+    );
+  }
+
+  const rawEmail = formData.get("email");
+  const email = typeof rawEmail === "string" ? rawEmail.trim() : "";
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    return Response.json(
+      { ok: false, error: "Please enter a valid email address." },
+      { status: 400 }
+    );
+  }
+
+  const apiKey = process.env.AIRTABLE_API_KEY;
+  const baseId = process.env.AIRTABLE_BASE_ID;
+  const table =
+    process.env.AIRTABLE_TABLE || process.env.AIRTABLE_TABLE_ID || "Waitlist";
+
+  if (!apiKey || !baseId || !table) {
+    return Response.json(
+      {
+        ok: false,
+        error: "Server not configured. Missing Airtable credentials.",
+      },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(
+      table
+    )}`;
+    const emailField = process.env.AIRTABLE_EMAIL_FIELD || "Email";
+    const fields: Record<string, string> = { [emailField]: email };
+    if (process.env.AIRTABLE_SOURCE_FIELD) {
+      fields[process.env.AIRTABLE_SOURCE_FIELD] =
+        process.env.AIRTABLE_SOURCE_VALUE || "Website";
+    }
+    if (process.env.AIRTABLE_SUBMITTED_AT_FIELD) {
+      fields[process.env.AIRTABLE_SUBMITTED_AT_FIELD] =
+        new Date().toISOString();
+    }
+    const body = {
+      records: [
+        {
+          fields,
+        },
+      ],
+      typecast: true,
+    };
+
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!resp.ok) {
+      let message = "Failed to join the waitlist. Please try again.";
+      try {
+        const data = await resp.json();
+        if (data?.error?.message) message = data.error.message;
+      } catch {}
+      return Response.json({ ok: false, error: message }, { status: 500 });
+    }
+
+    return Response.json({ ok: true });
+  } catch (error) {
+    return Response.json(
+      { ok: false, error: "Unexpected error. Please try again later." },
+      { status: 500 }
+    );
+  }
 }
 
 export default function Home() {
@@ -60,6 +147,7 @@ function SiteHeader() {
                 alt="Shoja"
                 className="h-10 w-auto rounded"
               />
+              Shoja
             </a>
             <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-6 text-sm text-gray-600 dark:text-gray-300">
               <a
@@ -548,13 +636,8 @@ function HeroSection() {
             parameters) with shared context, structured handoffs, and enterprise
             governance.
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <a href="#early-access" className="btn-primary">
-              Join the waitlist
-            </a>
-            <a href="#platform" className="btn-outline">
-              Explore the platform
-            </a>
+          <div className="mt-10 flex flex-col items-center justify-center gap-4">
+            <WaitlistForm />
           </div>
         </div>
       </div>
@@ -587,17 +670,7 @@ function CTASection() {
               We’re working with a small group of teams to shape Shoja. Join the
               waitlist and we’ll reach out as we expand access.
             </p>
-            <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href="mailto:pranav@shoja.ai?subject=Shoja%20Waitlist&body=I%20want%20to%20join%20the%20waitlist%20for%20Shoja.%20Here%27s%20a%20bit%20about%20our%20company%20and%20use%20case%3A%20"
-                className="btn-primary"
-              >
-                Email us to join the waitlist
-              </a>
-              <a href="#platform" className="btn-outline">
-                Learn more
-              </a>
-            </div>
+            <WaitlistForm />
           </div>
         </div>
       </div>
@@ -638,5 +711,48 @@ function SiteFooter() {
         </nav>
       </div>
     </footer>
+  );
+}
+
+function WaitlistForm() {
+  const actionData = useActionData<{ ok: boolean; error?: string }>();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
+  return (
+    <Form method="post" replace className="mt-6">
+      <input type="hidden" name="intent" value="join_waitlist" />
+      <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
+        <label htmlFor="email" className="sr-only">
+          Email address
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoComplete="email"
+          placeholder="you@company.com"
+          className="w-full sm:w-96 rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-[#242229]/60 px-4 py-3 text-base text-gray-900 dark:text-gray-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--brand-secondary)]/60"
+        />
+        <button
+          type="submit"
+          className="btn-primary min-w-36"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Joining..." : "Join the waitlist"}
+        </button>
+      </div>
+      {actionData?.ok && (
+        <p className="mt-3 text-green-700 dark:text-green-400 text-sm">
+          You're on the list! We'll be in touch soon.
+        </p>
+      )}
+      {actionData && !actionData.ok && actionData.error && (
+        <p className="mt-3 text-red-700 dark:text-red-400 text-sm">
+          {actionData.error}
+        </p>
+      )}
+    </Form>
   );
 }
