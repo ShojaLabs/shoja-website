@@ -216,6 +216,109 @@ h3,
   line-height: 1.15;
 }
 
+/* Vertical side lines that hug the content */
+.side-lines {
+  position: relative;
+}
+.side-lines::before,
+.side-lines::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(93, 48, 255, 0.4);
+  z-index: 10;
+  pointer-events: none;
+}
+.side-lines::before {
+  left: calc(50% - 40rem);
+}
+.side-lines::after {
+  right: calc(50% - 40rem);
+}
+
+/* Section dividers */
+.section-divider {
+  position: relative;
+}
+.section-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 1px;
+  background: rgba(48, 255, 145, 0.1);
+}
+
+.section-divider-bottom {
+  position: relative;
+}
+.section-divider-bottom::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 1px;
+  background: rgba(48, 255, 145, 0.1);
+}
+
+/* Vertical content lines */
+.vertical-lines {
+  position: relative;
+}
+.vertical-lines::before,
+.vertical-lines::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(93, 48, 255, 0.1);
+  pointer-events: none;
+}
+.vertical-lines::before {
+  left: 25%;
+}
+.vertical-lines::after {
+  right: 25%;
+}
+
+/* Chess pattern in margins outside vertical lines */
+.chess-margins {
+  position: relative;
+}
+.chess-margins::before,
+.chess-margins::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      45deg,
+      rgba(93, 48, 255, 0.1) 25%,
+      transparent 25%
+    ),
+    linear-gradient(-45deg, rgba(93, 48, 255, 0.1) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(93, 48, 255, 0.1) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(93, 48, 255, 0.1) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  pointer-events: none;
+}
+.chess-margins::before {
+  left: 0;
+  right: 75%;
+}
+.chess-margins::after {
+  right: 0;
+  left: 75%;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .bg-grid::before,

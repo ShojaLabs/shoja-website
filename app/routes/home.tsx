@@ -34,7 +34,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   return (
-    <main id="main">
+    <main id="main" className="side-lines">
       <SiteHeader />
       <HeroSection />
       {/* <WhatIsShoja /> */}
@@ -116,7 +116,10 @@ function WhyNow() {
   ];
 
   return (
-    <section id="why-now" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16">
+    <section
+      id="why-now"
+      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16 section-divider"
+    >
       <div className="rounded-3xl border border-black/10 dark:border-white/10 p-8 shadow-sm dark:bg-[#242229]/50">
         <h2 className="inline-flex items-center justify-center gap-3 text-center text-4xl font-semibold tracking-tight sm:text-5xl dark:text-gray-100">
           Why Now?
@@ -164,7 +167,7 @@ function ProblemSection() {
   return (
     <section
       id="problem"
-      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-20 sm:py-24"
+      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-20 sm:py-24 section-divider"
     >
       <div className="flex flex-col items-center gap-10 sm:gap-12">
         <h2 className="mx-auto max-w-3xl text-center text-balance text-4xl font-semibold tracking-tight sm:text-5xl dark:text-gray-100">
@@ -304,7 +307,7 @@ function EnablesSection() {
   return (
     <section
       id="enables"
-      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-8 sm:py-16"
+      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-8 sm:py-16 section-divider"
     >
       <div className="flex flex-col items-center gap-8 sm:gap-10">
         <h2 className="text-center text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -432,7 +435,7 @@ function PlatformStack() {
   return (
     <section
       id="platform"
-      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16"
+      className="mx-auto max-w-7xl scroll-mt-24 px-6 py-16 section-divider"
     >
       <div className="mx-auto max-w-3xl text-center">
         <h2 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl dark:text-gray-100">
@@ -561,7 +564,10 @@ function HeroSection() {
 
 function CTASection() {
   return (
-    <section id="early-access" className="relative overflow-hidden py-20">
+    <section
+      id="early-access"
+      className="relative overflow-hidden py-20 section-divider"
+    >
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute left-1/2 top-0 h-[500px] w-[900px] -translate-x-1/2 rounded-full"
@@ -583,7 +589,7 @@ function CTASection() {
             </p>
             <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
-                href="mailto:hello@shoja.ai?subject=Shoja%20Waitlist&body=I%20want%20to%20join%20the%20waitlist%20for%20Shoja.%20Here%27s%20a%20bit%20about%20our%20company%20and%20use%20case%3A%20"
+                href="mailto:pranav@shoja.ai?subject=Shoja%20Waitlist&body=I%20want%20to%20join%20the%20waitlist%20for%20Shoja.%20Here%27s%20a%20bit%20about%20our%20company%20and%20use%20case%3A%20"
                 className="btn-primary"
               >
                 Email us to join the waitlist
@@ -601,10 +607,14 @@ function CTASection() {
 
 function SiteFooter() {
   return (
-    <footer className="border-t border-black/10 dark:border-white/10 py-10">
+    <footer className="border-black/10 dark:border-white/10 py-10 section-divider">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 sm:flex-row">
         <div className="inline-flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-[var(--brand-primary)] via-indigo-500 to-[var(--brand-secondary)] shadow-sm ring-1 ring-black/5" />
+          <img
+            src="https://shoja.blr1.cdn.digitaloceanspaces.com/public/shoja.svg"
+            alt="Shoja"
+            className="h-10 w-auto rounded"
+          />
           <span className="text-sm font-semibold dark:text-gray-100">
             Shoja
           </span>
@@ -620,13 +630,7 @@ function SiteFooter() {
             Platform
           </a>
           <a
-            href="#early-access"
-            className="hover:text-gray-900 dark:hover:text-gray-100"
-          >
-            Waitlist
-          </a>
-          <a
-            href="mailto:hello@shoja.ai"
+            href="mailto:pranav@shoja.ai"
             className="hover:text-gray-900 dark:hover:text-gray-100"
           >
             Contact
