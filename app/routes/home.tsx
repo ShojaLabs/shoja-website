@@ -531,7 +531,7 @@ function PlatformStack() {
 }
 function HeroSection() {
   return (
-    <section id="top" className="relative overflow-hidden bg-grid h-dvh">
+    <section id="top" className="relative overflow-hidden h-dvh">
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 sm:pt-28">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mt-4 text-balance text-5xl font-semibold leading-tight tracking-tight sm:text-6xl dark:text-gray-100">
