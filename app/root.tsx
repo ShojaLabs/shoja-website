@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { ThemeProvider } from "./lib/theme";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,7 +20,8 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href:
+      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap",
   },
   { rel: "icon", href: "/favicon.ico", sizes: "any" },
 ];
@@ -33,8 +35,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="font-sans antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only fixed left-4 top-4 z-50 rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-900 shadow ring-1 ring-gray-300 dark:bg-[#242229] dark:text-gray-100 dark:ring-white/15"
+        >
+          Skip to content
+        </a>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

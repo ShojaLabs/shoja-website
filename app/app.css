@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-[#242229];
+  color-scheme: light dark;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+  /* UX: smooth anchor scrolling */
+  scroll-behavior: smooth;
 }
 
 /* Brand-driven visuals */
@@ -46,12 +46,12 @@ body {
   inset: 0;
   background-image: linear-gradient(
       to right,
-      color-mix(in oklab, var(--brand-primary) 18%, transparent) 1px,
+      color-mix(in oklab, var(--brand-primary) 10%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in oklab, var(--brand-primary) 18%, transparent) 1px,
+      color-mix(in oklab, var(--brand-primary) 10%, transparent) 1px,
       transparent 1px
     );
   background-size: 36px 36px;
@@ -61,7 +61,8 @@ body {
 
 /* Accent ring for brand elements */
 .brand-ring {
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--brand-primary) 45%, transparent);
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--brand-primary) 45%, transparent);
 }
 
 /* Glass card */
@@ -70,6 +71,155 @@ body {
   -webkit-backdrop-filter: saturate(1.2) blur(6px);
   backdrop-filter: saturate(1.2) blur(6px);
 }
-.glass-dark {
-  background: color-mix(in oklab, #0b0b0f 70%, transparent);
+
+.dark .glass {
+  background: color-mix(in oklab, #242229 70%, transparent);
+}
+
+.glass:hover {
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+}
+
+.dark .glass:hover {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+/* Simple entrance animation for active detail panel */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 300ms ease-out both;
+}
+
+/* Stagger utility for children (used for bullets) */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(4px);
+  animation: fadeInUp 400ms ease-out forwards;
+}
+.stagger-children > *:nth-child(1) {
+  animation-delay: 50ms;
+}
+.stagger-children > *:nth-child(2) {
+  animation-delay: 120ms;
+}
+.stagger-children > *:nth-child(3) {
+  animation-delay: 190ms;
+}
+.stagger-children > *:nth-child(4) {
+  animation-delay: 260ms;
+}
+.stagger-children > *:nth-child(5) {
+  animation-delay: 330ms;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--brand-primary);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+  transition: filter 150ms ease, transform 150ms ease;
+}
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+.btn-primary:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--brand-primary) 45%, white);
+  outline-offset: 2px;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(17 24 39);
+  border: 1px solid rgb(209 213 219);
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.btn-outline:hover {
+  background: rgb(249 250 251);
+}
+.btn-outline:active {
+  transform: translateY(1px);
+}
+
+.dark .btn-outline {
+  color: rgb(243 244 246);
+  border-color: rgb(55 65 81);
+}
+.dark .btn-outline:hover {
+  background: rgb(31 41 55);
+}
+
+/* Eyebrow/Badge */
+.badge-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(229 231 235 / 0.7);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(75 85 99);
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--brand-primary) 6%, transparent),
+    color-mix(in oklab, var(--brand-secondary) 6%, transparent)
+  );
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: var(--brand-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 600;
+  font-size: 5.5rem;
+}
+
+/* Heading font treatment */
+h1,
+h2,
+h3,
+.display-heading {
+  font-family: "Space Grotesk", var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+/* Tighter leading for large display text */
+.leading-tight {
+  line-height: 1.15;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bg-grid::before,
+  .gradient-blob {
+    animation: none !important;
+  }
 }
