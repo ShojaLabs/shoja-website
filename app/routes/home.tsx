@@ -11,7 +11,7 @@ import {
   IconArrowsRightLeft,
   IconQuestionMark,
 } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Form, useActionData, useNavigation } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
@@ -718,9 +718,16 @@ function WaitlistForm() {
   const actionData = useActionData<{ ok: boolean; error?: string }>();
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (actionData?.ok && formRef.current) {
+      formRef.current.reset();
+    }
+  }, [actionData]);
 
   return (
-    <Form method="post" replace className="mt-6">
+    <Form method="post" replace className="mt-6" ref={formRef}>
       <input type="hidden" name="intent" value="join_waitlist" />
       <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center">
         <label htmlFor="email" className="sr-only">
